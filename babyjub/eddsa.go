@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/iden3/go-iden3-crypto/mimc7"
-	"github.com/iden3/go-iden3-crypto/poseidon"
-	"github.com/iden3/go-iden3-crypto/utils"
+	"github.com/polymerdao/go-iden3-crypto/mimc7"
+	"github.com/polymerdao/go-iden3-crypto/poseidon"
+	"github.com/polymerdao/go-iden3-crypto/utils"
 )
 
 // pruneBuffer prunes the buffer during key generation according to RFC 8032.
