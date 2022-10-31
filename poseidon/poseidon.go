@@ -174,3 +174,75 @@ func HashBytes(msg []byte) (*big.Int, error) {
 
 	return hash, nil
 }
+
+// Permute computes the BN128 Poseidon hash for the given Goldilocks inputs
+func Permute(in [12]uint64) ([12]uint64, error) {
+	var inp [4]*ff.Element
+	for i := 0; i < 4; i++ {
+		inp[i] = ff.NewElement()
+		inp[i][0] = in[i*3+2]
+		inp[i][1] = in[i*3+1]
+		inp[i][2] = in[i*3+0]
+		inp[i][3] = 0
+		inp[i].ToMont()
+	}
+
+	const t = 5
+	nRoundsF := NROUNDSF
+	nRoundsP := NROUNDSP[t-2]
+	C := c.c[t-2]
+	S := c.s[t-2]
+	M := c.m[t-2]
+	P := c.p[t-2]
+
+	state := make([]*ff.Element, t)
+	state[0] = zero()
+	copy(state[1:], inp[:])
+
+	ark(state, C, 0)
+
+	for i := 0; i < nRoundsF/2-1; i++ {
+		exp5state(state)
+		ark(state, C, (i+1)*t)
+		state = mix(state, t, M)
+	}
+	exp5state(state)
+	ark(state, C, (nRoundsF/2)*t)
+	state = mix(state, t, P)
+
+	for i := 0; i < nRoundsP; i++ {
+		exp5(state[0])
+		state[0].Add(state[0], C[(nRoundsF/2+1)*t+i])
+
+		mul := zero()
+		newState0 := zero()
+		for j := 0; j < len(state); j++ {
+			mul.Mul(S[(t*2-1)*i+j], state[j])
+			newState0.Add(newState0, mul)
+		}
+
+		for k := 1; k < t; k++ {
+			mul = zero()
+			state[k] = state[k].Add(state[k], mul.Mul(state[0], S[(t*2-1)*i+t+k-1]))
+		}
+		state[0] = newState0
+	}
+
+	for i := 0; i < nRoundsF/2-1; i++ {
+		exp5state(state)
+		ark(state, C, (nRoundsF/2+1)*t+nRoundsP+i*t)
+		state = mix(state, t, M)
+	}
+	exp5state(state)
+	state = mix(state, t, M)
+
+	var res [12]uint64
+	for i := 0; i < 4; i++ {
+		rE := state[i]
+		rE.FromMont()
+		res[i*3] = rE[2]
+		res[i*3+1] = rE[1]
+		res[i*3+2] = rE[0]
+	}
+	return res, nil
+}

@@ -184,6 +184,32 @@ func TestHashBytes(t *testing.T) {
 	}
 }
 
+func TestPoseidonPermute(t *testing.T) {
+	h, err := Permute([12]uint64{8917524657281059100, 13029010200779371910, 16138660518493481604, 17277322750214136960,
+		1441151880423231822, 0, 0, 0, 0, 0, 0, 0})
+	assert.Nil(t, err)
+	assert.Equal(t,
+		uint64(16736853722845225729),
+		h[0])
+	assert.Equal(t,
+		uint64(1446699130810517790),
+		h[1])
+	assert.Equal(t,
+		uint64(15445626857806971868),
+		h[2])
+	assert.Equal(t,
+		uint64(6331160477881736675),
+		h[3])
+}
+
+func BenchmarkPoseidonPermute(b *testing.B) {
+	in := [12]uint64{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}
+
+	for i := 0; i < b.N; i++ {
+		Permute(in) //nolint:errcheck,gosec
+	}
+}
+
 func BenchmarkPoseidonHash6Inputs(b *testing.B) {
 	b0 := big.NewInt(0)
 	b1 := utils.NewIntFromString("12242166908188651009877250812424843524687801523336557272219921456462821518061") //nolint:lll
