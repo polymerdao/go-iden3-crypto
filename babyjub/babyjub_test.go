@@ -6,8 +6,8 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/polymerdao/go-iden3-crypto/constants"
-	"github.com/polymerdao/go-iden3-crypto/utils"
+	"github.com/iden3/go-iden3-crypto/constants"
+	"github.com/iden3/go-iden3-crypto/utils"
 	"github.com/stretchr/testify/assert"
 )
 

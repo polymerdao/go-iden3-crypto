@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/polymerdao/go-iden3-crypto/ff"
+	"github.com/iden3/go-iden3-crypto/ff"
 )
 
 type constantsStr struct {

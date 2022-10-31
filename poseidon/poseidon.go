@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/polymerdao/go-iden3-crypto/ff"
-	"github.com/polymerdao/go-iden3-crypto/utils"
+	"github.com/iden3/go-iden3-crypto/ff"
+	"github.com/iden3/go-iden3-crypto/utils"
 )
 
 const NROUNDSF = 8 //nolint:golint

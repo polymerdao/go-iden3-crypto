@@ -5,7 +5,7 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/polymerdao/go-iden3-crypto/keccak256"
+	"github.com/iden3/go-iden3-crypto/keccak256"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -1,6 +1,6 @@
 package poseidon
 
-import "github.com/polymerdao/go-iden3-crypto/ffg"
+import "github.com/iden3/go-iden3-crypto/ffg"
 
 const (
 	NROUNDSF = 8  //nolint:golint
