@@ -1,1 +1,1 @@
-go build -o libposeidon-permute-c.so -buildmode=c-shared main
+go build -o libposeidon-permute-c.a -buildmode=c-archive main

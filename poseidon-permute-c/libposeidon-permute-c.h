@@ -69,9 +69,25 @@ extern "C" {
 #endif
 
 
+/* Return type for permute */
+struct permute_return {
+	GoUint64 r0;
+	GoUint64 r1;
+	GoUint64 r2;
+	GoUint64 r3;
+	GoUint64 r4;
+	GoUint64 r5;
+	GoUint64 r6;
+	GoUint64 r7;
+	GoUint64 r8;
+	GoUint64 r9;
+	GoUint64 r10;
+	GoUint64 r11;
+};
+
 // converts three uint64 into one big int and run poseidon
 //
-extern GoSlice permute(GoSlice elements);
+extern struct permute_return permute(GoUint64 e0, GoUint64 e1, GoUint64 e2, GoUint64 e3, GoUint64 e4, GoUint64 e5, GoUint64 e6, GoUint64 e7, GoUint64 e8, GoUint64 e9, GoUint64 e10, GoUint64 e11);
 
 #ifdef __cplusplus
 }
